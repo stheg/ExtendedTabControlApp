@@ -1,0 +1,18 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TestTabControlApp" x:Class="TestTabControlApp.MyTabControl" 
+             mc:Ignorable="d" Height="202" Width="477.75">
+    <TabControl>
+        <local:ClosableTabItem Margin="-2,-2,2,2" Width="auto">
+            <StackPanel>
+                <TextBlock><Run Text="TextBlock example"/></TextBlock>
+                <Button Content="Btn example"/>
+                <CheckBox Content="CheckBox example"/>
+            </StackPanel>
+        </local:ClosableTabItem>
+        <local:ClosableTabItem IsAddTab="True" Width="20"/>
+    </TabControl>
+</UserControl>
