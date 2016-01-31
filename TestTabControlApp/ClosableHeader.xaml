@@ -1,0 +1,16 @@
+﻿<UserControl x:Name="userControl" x:Class="TestTabControlApp.ClosableHeader"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="30" d:DesignWidth="155">
+    <Grid Background="White" Margin="2">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock x:Name="txtHeader" Grid.Column="0"/>
+        <Button x:Name="btnClose" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Content="X" Background="White" BorderThickness="0" Click="CloseButton_click"/>
+    </Grid>
+</UserControl>
