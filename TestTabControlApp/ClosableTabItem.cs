@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace TestTabControlApp
 {
@@ -54,6 +55,8 @@ namespace TestTabControlApp
             ((Panel)Content).Children.Add(new CheckBox() { Content = new TextBlock() { Text = "Test CheckBox" } });
             ((Panel)Content).Children.Add(new Button() { Content = new TextBlock() { Text = "Test Button" } });
             ((Panel)Content).Children.Add(new TextBlock() { Text = "Test TextBlock" });
+
+            MaxWidth = 150;
         }
 
         void btnClose_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -62,7 +65,6 @@ namespace TestTabControlApp
             ((Panel)Content).Children.Clear();
             parent.SelectedIndex = parent.Items.IndexOf(this) - 1;
             parent.Items.Remove(this);
-            resize(parent);
         }
 
         protected override void OnSelected(RoutedEventArgs e)
@@ -73,29 +75,10 @@ namespace TestTabControlApp
                 base.OnUnselected(e);
                 parent.Items.Insert(parent.Items.Count - 1, new ClosableTabItem());
                 parent.SelectedIndex = parent.Items.Count - 2;
-                resize(parent);
             }
             else
             {
                 base.OnSelected(e);
-            }
-        }
-
-        private void resize(TabControl parent)
-        {
-            return;
-            var items = parent.Items;
-            double itemsWidth = 0.0d;
-            foreach (Control item in items)
-            {
-                itemsWidth += item.ActualWidth;
-            }
-            if (itemsWidth > parent.ActualWidth)
-            {
-                for (int i = 0; i < items.Count-1; i++)
-                {
-                    ((Control)items[i]).Width = parent.ActualWidth / items.Count;
-                }
             }
         }
     }
