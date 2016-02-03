@@ -53,7 +53,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="TabSizeConverter.cs" />
+    <Compile Include="ExtendedTabControl.cs" />
+    <Page Include="ExtendedTabControlTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -66,19 +70,12 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="MyTabControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="ClosableHeader.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MyTabControl.xaml.cs">
-      <DependentUpon>MyTabControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ClosableTabItem.cs" />
     <Compile Include="ClosableHeader.xaml.cs">
       <DependentUpon>ClosableHeader.xaml</DependentUpon>

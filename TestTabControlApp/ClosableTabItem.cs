@@ -12,7 +12,7 @@ namespace TestTabControlApp
     public class ClosableTabItem : TabItem
     {
         private const String AddTagText = "+";
-        private const String NewTagText = "Новая вкладка";
+        private const String NewTabText = "Новая вкладка";
 
         public String HeaderText
         {
@@ -39,7 +39,9 @@ namespace TestTabControlApp
                 _isAddTab = value;
                 if (_isAddTab)
                 {
-                    Header = new TextBlock() { Text = AddTagText };
+                    Header = new ClosableHeader() { Content = new TextBlock() { Text = "+" } };
+                    MaxWidth = 25;
+                    Width = 25;
                 }
             }
         }
@@ -47,39 +49,82 @@ namespace TestTabControlApp
         public ClosableTabItem()
         {
             Header = new ClosableHeader();
-            ((ClosableHeader)Header).txtHeader.Text = NewTagText;
+            ((ClosableHeader)Header).txtHeader.Text = NewTabText;
             ((ClosableHeader)Header).btnClose.Click += btnClose_Click;
+
+            MaxWidth = 150;
+
+            this.AllowDrop = true;
 
             //test example
             Content = new StackPanel();
             ((Panel)Content).Children.Add(new CheckBox() { Content = new TextBlock() { Text = "Test CheckBox" } });
             ((Panel)Content).Children.Add(new Button() { Content = new TextBlock() { Text = "Test Button" } });
             ((Panel)Content).Children.Add(new TextBlock() { Text = "Test TextBlock" });
-
-            MaxWidth = 150;
         }
+
 
         void btnClose_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            var parent = (TabControl)this.Parent;
-            ((Panel)Content).Children.Clear();
-            parent.SelectedIndex = parent.Items.IndexOf(this) - 1;
-            parent.Items.Remove(this);
+            CloseTabFrom(this.Parent, this);
         }
 
         protected override void OnSelected(RoutedEventArgs e)
         {
             if (_isAddTab)
             {
-                var parent = (TabControl)this.Parent;
-                base.OnUnselected(e);
-                parent.Items.Insert(parent.Items.Count - 1, new ClosableTabItem());
-                parent.SelectedIndex = parent.Items.Count - 2;
+                OnUnselected(e);
+                AddNewClosableTabItemTo(this.Parent);
             }
             else
             {
                 base.OnSelected(e);
             }
+        }
+
+        public static void AddNewClosableTabItemTo(object tabControl)
+        {
+            if (tabControl == null) throw new ArgumentNullException();
+            if (tabControl is ExtendedTabControl)
+            {
+                var tab = new ClosableTabItem();
+                (tabControl as ExtendedTabControl).Items.Insert((tabControl as ExtendedTabControl).Items.Count - 1, tab);
+                (tabControl as ExtendedTabControl).SelectedItem = tab;
+            }
+        }
+
+        public static void CloseTabFrom(object parent, ClosableTabItem tab)
+        {
+            if (parent is ExtendedTabControl)
+            {
+                var tc = (TabControl)parent;
+                tc.SelectedIndex = tc.Items.IndexOf(tab) - 1;
+                ((Panel)tab.Content).Children.Clear();
+                tc.Items.Remove(tab);
+            }
+        }
+
+        public static ClosableTabItem transformToClosableTabItem(object value)
+        {
+            if (value is ClosableTabItem)
+            {
+                return value as ClosableTabItem;
+            }
+            else
+            {
+                return new ClosableTabItem() { Content = value, HeaderText = NewTabText };
+            }
+        }
+
+        public static IList<ClosableTabItem> transformToClosableTabItem(IList<object> values)
+        {
+            var newItems = new List<ClosableTabItem>();
+            for (int i = 0; i < values.Count; i++)
+            {
+                newItems.Add(transformToClosableTabItem(values[i]));
+            }
+
+            return newItems;
         }
     }
 }

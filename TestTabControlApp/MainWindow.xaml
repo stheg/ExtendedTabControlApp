@@ -4,8 +4,7 @@
         xmlns:local="clr-namespace:TestTabControlApp" x:Class="TestTabControlApp.MainWindow"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-
-        <local:MyTabControl Height="Auto" Width="Auto"/>
-
+        <local:ExtendedTabControl>
+        </local:ExtendedTabControl>
     </Grid>
 </Window>
