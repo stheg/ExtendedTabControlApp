@@ -13,8 +13,8 @@ namespace TestTabControlApp
 {
     public class ClosableTabItem : TabItem
     {
-        private const String AddTagText = "+";
-        private const String NewTabText = "Новая вкладка";
+        private const String TextAddTag = "+";
+        private const String TextNewTab = "Новая вкладка";
 
         public String HeaderText
         {
@@ -42,8 +42,8 @@ namespace TestTabControlApp
                 if (_isAddTab)
                 {
                     Header = new ClosableHeader() { Content = new TextBlock() { Text = "+" } };
-                    MaxWidth = 25;
-                    Width = 25;
+                    this.MaxWidth = 25;
+                    this.Width = 25;
                 }
             }
         }
@@ -51,21 +51,20 @@ namespace TestTabControlApp
         public ClosableTabItem()
         {
             Header = new ClosableHeader();
-            ((ClosableHeader)Header).txtHeader.Text = NewTabText;
+            ((ClosableHeader)Header).txtHeader.Text = TextNewTab;
             ((ClosableHeader)Header).btnClose.Click += btnClose_Click;
 
-            MaxWidth = 150;
+            this.MaxWidth = 150;
 
             this.MouseDown += ClosableTabItem_MouseDown;
             this.AllowDrop = true;
             this.Drop += ClosableTabItem_Drop;
 
-            //test example
+            //example for test
             Content = new StackPanel();
             ((Panel)Content).Children.Add(new CheckBox() { Content = new TextBlock() { Text = "Test CheckBox" } });
             ((Panel)Content).Children.Add(new Button() { Content = new TextBlock() { Text = "Test Button" } });
             ((Panel)Content).Children.Add(new TextBlock() { Text = "Test TextBlock" });
-            ((Panel)Content).Children.Add(new Image() { Source = new BitmapImage(new Uri("Resources/IMG_7508.jpg", UriKind.Relative)) { CreateOptions = BitmapCreateOptions.IgnoreImageCache } });
         }
 
         void ClosableTabItem_Drop(object sender, DragEventArgs e)
@@ -77,7 +76,7 @@ namespace TestTabControlApp
 
             if (sourceItem.IsAddTab)
                 return;
-            //addsTab must be last in Items
+            //_addsTab must be last in Items
             if (targetItem.IsAddTab)
                 newIndex--;
 
@@ -164,7 +163,7 @@ namespace TestTabControlApp
             }
             else
             {
-                return new ClosableTabItem() { Content = value, HeaderText = NewTabText };
+                return new ClosableTabItem() { Content = value, HeaderText = TextNewTab };
             }
         }
 
