@@ -11,16 +11,30 @@ namespace TestTabControlApp
 {
     public class ExtendedTabControl : TabControl
     {
-        private readonly ClosableTabItem _addsTab = new ClosableTabItem() { IsAddTab = true };
+        private readonly ClosableTabItem _addsTab = new ClosableTabItem() { Header = new TextBlock() { Text = "+" }, Width = 25, MaxWidth = 25 };
+        public ClosableTabItem AddsTab { get { return _addsTab; } }
 
         private List<Key> _pressedKeys = new List<Key>();
+
+        private bool _onDragDrop = false;
+        public bool OnDragDropNow { get { return _onDragDrop; } set { _onDragDrop = value; } }
 
         public ExtendedTabControl()
             : base()
         {
             this.Template = FindResource("extendedTabControlTemplate") as ControlTemplate;
-            base.Loaded += ExtendedTabControl_Loaded;
+            this.Loaded += ExtendedTabControl_Loaded;
             this.KeyDown += ExtendedTabControl_KeyDown;
+            this.SelectionChanged += ExtendedTabControl_SelectionChanged;
+        }
+
+        void ExtendedTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count > 0 && e.AddedItems[0] == _addsTab && !_onDragDrop)
+            {
+                ClosableTabItem.AddNewClosableTabItemTo(this);
+                (this.Items[this.Items.Count - 2] as ClosableTabItem).Focus(); 
+            }
         }
 
         void ExtendedTabControl_KeyDown(object sender, KeyEventArgs e)

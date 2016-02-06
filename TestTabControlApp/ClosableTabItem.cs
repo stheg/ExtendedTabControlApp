@@ -33,7 +33,7 @@ namespace TestTabControlApp
         }
 
         private bool _isAddTab = false;
-        public bool IsAddTab 
+        public bool IsAddTab
         {
             get { return _isAddTab; }
             set
@@ -55,16 +55,16 @@ namespace TestTabControlApp
             ((ClosableHeader)Header).btnClose.Click += btnClose_Click;
 
             this.MaxWidth = 150;
+            this.AllowDrop = true;
 
             this.MouseDown += ClosableTabItem_MouseDown;
-            this.AllowDrop = true;
             this.Drop += ClosableTabItem_Drop;
 
-            //example for test
             Content = new StackPanel();
             ((Panel)Content).Children.Add(new CheckBox() { Content = new TextBlock() { Text = "Test CheckBox" } });
             ((Panel)Content).Children.Add(new Button() { Content = new TextBlock() { Text = "Test Button" } });
             ((Panel)Content).Children.Add(new TextBlock() { Text = "Test TextBlock" });
+
         }
 
         void ClosableTabItem_Drop(object sender, DragEventArgs e)
@@ -72,24 +72,30 @@ namespace TestTabControlApp
             var targetItem = sender as ClosableTabItem;
             var parent = targetItem.Parent as ExtendedTabControl;
             int newIndex = parent.Items.IndexOf(targetItem);
+            //source item can't be _addsTab.
             var sourceItem = e.Data.GetData(typeof(ClosableTabItem)) as ClosableTabItem;
 
-            if (sourceItem.IsAddTab)
-                return;
             //_addsTab must be last in Items
-            if (targetItem.IsAddTab)
+            if (targetItem == parent.AddsTab)
                 newIndex--;
 
             parent.Items.Remove(sourceItem);
             parent.Items.Insert(newIndex, sourceItem);
-            parent.SelectedIndex = -1;
             parent.SelectedItem = sourceItem;
+
+            parent.OnDragDropNow = false;
         }
 
         void ClosableTabItem_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            if ((sender as ClosableTabItem).IsAddTab)
+            var item = sender as ClosableTabItem;
+            var parent = item.Parent as ExtendedTabControl;
+
+            if (item == parent.AddsTab)
                 return;
+
+            parent.OnDragDropNow = true;
+
             DragDrop.DoDragDrop(sender as ClosableTabItem, sender, DragDropEffects.Move);
         }
 
@@ -97,19 +103,6 @@ namespace TestTabControlApp
         void btnClose_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             CloseTabFrom(this.Parent, this);
-        }
-
-        protected override void OnSelected(RoutedEventArgs e)
-        {
-            if (_isAddTab)
-            {
-                OnUnselected(e);
-                AddNewClosableTabItemTo(this.Parent);
-            }
-            else
-            {
-                base.OnSelected(e);
-            }
         }
 
         public static void AddNewClosableTabItemTo(object tabControl)
@@ -127,16 +120,16 @@ namespace TestTabControlApp
         {
             if (parent is ExtendedTabControl)
             {
-                var tc = parent as ExtendedTabControl;
-                tc.SelectedIndex = tc.Items.IndexOf(tab) - 1;
-                
+                var etc = parent as ExtendedTabControl;
+                etc.SelectedIndex = etc.Items.IndexOf(tab) - 1;
+
                 (tab.Header as ClosableHeader).txtHeader = null;
                 (tab.Header as ClosableHeader).btnClose = null;
                 tab.Header = null;
 
                 RecursiveClearPanelsChildren(tab.Content as Panel);
-                
-                tc.Items.Remove(tab);
+
+                etc.Items.Remove(tab);
             }
         }
 
