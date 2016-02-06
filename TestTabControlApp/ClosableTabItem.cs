@@ -32,22 +32,6 @@ namespace TestTabControlApp
             }
         }
 
-        private bool _isAddTab = false;
-        public bool IsAddTab
-        {
-            get { return _isAddTab; }
-            set
-            {
-                _isAddTab = value;
-                if (_isAddTab)
-                {
-                    Header = new ClosableHeader() { Content = new TextBlock() { Text = "+" } };
-                    this.MaxWidth = 25;
-                    this.Width = 25;
-                }
-            }
-        }
-
         public ClosableTabItem()
         {
             Header = new ClosableHeader();

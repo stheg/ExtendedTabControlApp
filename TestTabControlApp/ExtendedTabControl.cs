@@ -11,7 +11,13 @@ namespace TestTabControlApp
 {
     public class ExtendedTabControl : TabControl
     {
-        private readonly ClosableTabItem _addsTab = new ClosableTabItem() { Header = new TextBlock() { Text = "+" }, Width = 25, MaxWidth = 25 };
+        private readonly ClosableTabItem _addsTab = new ClosableTabItem() 
+        { 
+            Header = new TextBlock() { Text = "+" },
+            Content = null,
+            Width = 25.0d, MaxWidth = 25.0d 
+        };
+
         public ClosableTabItem AddsTab { get { return _addsTab; } }
 
         private List<Key> _pressedKeys = new List<Key>();
