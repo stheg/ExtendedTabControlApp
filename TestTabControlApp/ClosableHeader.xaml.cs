@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace TestTabControlApp
+namespace ExtendedTabControlApp
 {
     /// <summary>
     /// Interaction logic for MyTabItem.xaml

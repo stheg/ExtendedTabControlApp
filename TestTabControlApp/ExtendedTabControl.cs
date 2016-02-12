@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace TestTabControlApp
+namespace ExtendedTabControlApp
 {
     public class ExtendedTabControl : TabControl
     {

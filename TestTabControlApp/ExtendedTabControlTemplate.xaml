@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:TestTabControlApp">
+                    xmlns:local="clr-namespace:ExtendedTabControlApp">
     <ControlTemplate x:Key="extendedTabControlTemplate" TargetType="{x:Type local:ExtendedTabControl}">
         <Grid>
             <Grid.ColumnDefinitions>
