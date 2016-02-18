@@ -19,7 +19,6 @@
                 Grid.Column="1" 
                 Content="X" 
                 Background="White" 
-                BorderThickness="0" 
-                Click="CloseButton_click"/>
+                BorderThickness="0"/>
     </Grid>
 </UserControl>

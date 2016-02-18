@@ -70,6 +70,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ExtendedTabControl.cs" />
+    <Compile Include="TabItemCleaner.cs" />
+    <Compile Include="TabItemFactory.cs" />
     <Page Include="ExtendedTabControlTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

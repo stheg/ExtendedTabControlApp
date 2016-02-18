@@ -30,10 +30,5 @@ namespace ExtendedTabControlApp
         {
             InitializeComponent();
         }
-
-        private void CloseButton_click(object sender, RoutedEventArgs e)
-        {
-            
-        }
     }
 }
